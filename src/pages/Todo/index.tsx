@@ -12,9 +12,8 @@ function Todo() {
 
   const [items, setItems] = useState(TODO_LIST);
   const [searchInputValue, setSearchInputValue] = useState("");
-  const [search, setSearch] = useState("");
 
-  const handleChange = (event: ChangeEvent<unknown>) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchInputValue(event.target.value);
   };
 
@@ -129,7 +128,7 @@ function Todo() {
                       </button>
                       <button
                         onClick={() =>
-                          handleChangeTaskStatus(item.id, item.status)
+                          handleChangeTaskStatus(item.id, item.status as ITodoTypes)
                         }
                       >
                         change to{" "}
