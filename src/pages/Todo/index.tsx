@@ -1,4 +1,4 @@
-import { useState, useEffect, ChangeEvent } from "react";
+import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 
 import logoImage from "../../assets/logo.svg";
 import { TODO_LIST } from "./initial-state";
@@ -7,6 +7,9 @@ import { ITodoTypes } from "./types";
 import "./index.css";
 
 function Todo() {
+
+  const originalItems = TODO_LIST;
+
   const [items, setItems] = useState(TODO_LIST);
   const [searchInputValue, setSearchInputValue] = useState("");
   const [search, setSearch] = useState("");
@@ -15,21 +18,28 @@ function Todo() {
     setSearchInputValue(event.target.value);
   };
 
-  const handleSearch = (event) => {
+  const handleSearch = (event: FormEvent) => {
+
     event.preventDefault();
-    setSearch(searchInputValue);
+
+
+    //RESET 
+    if (searchInputValue.trim() === "") {
+      setItems(originalItems);
+    } else {
+      // FILTER
+      const filteredItems = originalItems.filter((item) =>
+        item.title.toLowerCase().includes(searchInputValue.toLowerCase())
+      );
+      setItems(filteredItems);
+    }
+
   };
 
-  const handleDeleteTask = (id: number) => {
-    const editedItems = [];
+  const handleDeleteTask = (id: string) => {
 
-    items.map((item) => {
-      if (item.id !== id) {
-        editedItems.push(item);
-      }
-    });
+    setItems(items.filter((_item)  => _item.id !== id));
 
-    setItems(editedItems);
   };
 
   const handleChangeTaskStatus = (id: string, status: ITodoTypes) => {
@@ -49,14 +59,11 @@ function Todo() {
   };
 
   useEffect(() => {
-    if (search) {
-      setItems((currentItems) => [
-        ...currentItems,
-        ...TODO_LIST.filter((item) => item.title.includes(search)),
-      ]);
+    if (searchInputValue === '') {
+      setItems(originalItems);
     }
      
-  }, [search]);
+  }, [originalItems, searchInputValue]);
 
   return (
     <main id="page" className="todo">
@@ -94,11 +101,11 @@ function Todo() {
                 &#128533;
               </span>
             )}
-            {items.map((item, i) => {
+            {items.map((item, index) => {
               return (
                 <li key={item.id}>
                   <span>
-                    {i}
+                    {index + 1}
                     {item.required ? "*" : ""}.
                   </span>
                   <div className="todo__content">
@@ -110,14 +117,14 @@ function Todo() {
                     {item.links && item.links.length > 0 && (
                       <div className="todo__links">
                         {item.links.map((link) => (
-                          <a key={link.name} target="_blank" href={link.url}>
+                          <a key={link.name} target="_blank" href={link?.link || link?.url }>
                             {link.name}
                           </a>
                         ))}
                       </div>
                     )}
                     <div className="todo__actions">
-                      <button onClick={() => handleDeleteTask(item.uuid)}>
+                      <button onClick={() => handleDeleteTask(item.id)}>
                         delete
                       </button>
                       <button
