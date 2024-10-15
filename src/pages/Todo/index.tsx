@@ -1,6 +1,6 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 
-import logoImage from "../../assets/logo.svg";
+import logoImage from "../../assets/svg/logo.svg";
 import { TODO_LIST } from "./initial-state";
 import { ITodoTypes } from "./types";
 

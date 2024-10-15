@@ -1,4 +1,4 @@
-import logoImage from "../../assets/logo.svg";
+import logoImage from "../../assets/svg/logo.svg";
 
 import "../../App.css";
 
@@ -24,7 +24,7 @@ function Home() {
             <a href="/todo">TO-DO LIST</a>
           </li>
           <li>
-            <a href="#">IBANKING</a>
+            <a href="/login">IBANKING</a>
           </li>
         </ul>
       </div>
