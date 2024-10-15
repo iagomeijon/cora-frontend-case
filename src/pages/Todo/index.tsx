@@ -1,6 +1,6 @@
 import { useState, useEffect, ChangeEvent } from "react";
 
-import logoImage from "../assets/logo.svg";
+import logoImage from "../../assets/logo.svg";
 import { TODO_LIST } from "./initial-state";
 import { ITodoTypes } from "./types";
 
@@ -27,41 +27,41 @@ function Todo() {
       if (item.id !== id) {
         editedItems.push(item);
       }
-    })
+    });
 
     setItems(editedItems);
   };
 
   const handleChangeTaskStatus = (id: string, status: ITodoTypes) => {
-    const reversedStatus = status === "pending" ? "pending" : "done";
-    const editedItems = [];
+    const reversedStatus = status === "pending" ?  "done" : "pending";
 
-    for (let i = 0; i < items.length; i++) {
-      if (items[i].id === id) {
-        editedItems.push({
-          ...items[i],
-          status: reversedStatus,
-        });
-      } else {
-        editedItems.push(items[i]);
-      }
-    }
-
-    setItems(editedItems);
+    setItems(items.map((_item) => {
+        if(_item.id === id) {
+          return {
+            ..._item,
+            status: reversedStatus
+          };
+        } else {
+          return _item;
+        }
+    }));
+    
   };
 
   useEffect(() => {
-    if (search || items)
+    if (search) {
       setItems((currentItems) => [
         ...currentItems,
         ...TODO_LIST.filter((item) => item.title.includes(search)),
       ]);
-  }, [search, items]);
+    }
+     
+  }, [search]);
 
   return (
     <main id="page" className="todo">
       <div>
-        <img src={logoImage} alt="Cora" title="Cora"></img>
+        <img src={logoImage} alt="Cora" title="Cora" />
         <h1>Weekly to-do list &#128467;</h1>
         <h2>
           Bem-vindo ao nosso produto <i>fake</i> de <strong>to-do</strong> list
@@ -75,14 +75,14 @@ function Todo() {
           o status <strong>done</strong>)
         </p>
         <p className="disclaimer">
-          Items obrigatórios marcados com arteristico (<strong>*</strong>)
+          Items obrigatórios marcados com asterisco (<strong>*</strong>)
         </p>
         <div className="todo__wrapper">
           <form className="todo__search" onSubmit={handleSearch}>
             <input
               id="search"
               placeholder="busca por texto..."
-              value={searchValue}
+              value={searchInputValue}
               onChange={handleChange}
             />
             <button type="submit">buscar</button>
@@ -96,7 +96,7 @@ function Todo() {
             )}
             {items.map((item, i) => {
               return (
-                <li>
+                <li key={item.id}>
                   <span>
                     {i}
                     {item.required ? "*" : ""}.
@@ -131,7 +131,7 @@ function Todo() {
                         </strong>
                       </button>
                     </div>
-                  <div>
+                  </div>
                 </li>
               );
             })}
