@@ -18,7 +18,7 @@ function TransactionList() {
   const renderTransactionRow = (item: ITransactionItem) => {
     const valueClass = item.entry === 'CREDIT' ? 'entry' : '';
     return (
-      <tr className="transaction-info">
+      <tr key={item.id} className="transaction-info">
         <td className="transaction-icon entry">
           <img src={getIcon(item.entry)} alt="entryIcon" title="entryIcon" />
         </td>
@@ -42,7 +42,7 @@ function TransactionList() {
 
       {transactions?.results.map((_transactionDay) => {
         return (
-          <section>
+          <section key={_transactionDay.date}>
             <div className="transaction-date">
               <h3>{formatDayDate(_transactionDay.date)}</h3>
               <p>
