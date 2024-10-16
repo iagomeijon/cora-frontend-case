@@ -63,6 +63,10 @@
   width: 100%;
 }
 
+#transaction-value {
+  font-weight: 900;
+}
+
 .transaction-info td {
   padding: 10px;
   font-size: 16px;
@@ -70,6 +74,13 @@
   font-weight: 400;
   vertical-align: middle;
   width: auto;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.transaction-info .transaction-description {
+  width: 40%;
 }
 
 .transaction-name,
@@ -94,19 +105,6 @@
   color: var(--color-entry);
 }
 
-.transaction-description {
-  font-size: 14px;
-  color: #777;
-}
-
-.transaction-value {
-  font-weight: 900;
-}
-
-.transaction-value.entry {
+.transaction-info .entry {
   color: var(--color-entry);
-}
-
-.transaction-value.reversal {
-  text-decoration: line-through;
 }

@@ -1,6 +1,9 @@
 import moment from 'moment';
 import 'moment/locale/pt-br';
 
+import entryIcon from "../../../assets/svg/entry.svg";
+import outIcon from "../../../assets/svg/out.svg";
+
 const monthsTranslation: { [key: string]: string } = {
     January: 'Janeiro',
     February: 'Fevereiro',
@@ -24,6 +27,21 @@ export function formatDayDate(dateString: string) {
     return formattedDate.replace(monthInEnglish, translatedMonth);
 }
 
+export function formatDateTime(dateString: string) {
+
+    const day = moment(dateString).format('DD');
+    const monthInEnglish = moment(dateString).format('MMMM');
+    const year = moment(dateString).format('YYYY');
+    const time = moment(dateString).format('HH:mm');
+  
+   
+    const translatedMonth = monthsTranslation[monthInEnglish];
+    const abbreviatedMonth = translatedMonth.slice(0, 3);
+  
+
+    return `${day} ${abbreviatedMonth} ${year} - ${time}`;
+  }
+
 export function formatCurrency(value: number, entryType: string) {
 
     const sign = entryType === 'CREDIT' ? '+' : '-';
@@ -37,4 +55,8 @@ export function formatCurrency(value: number, entryType: string) {
     });
   
     return `${sign} ${formattedValue}`;
-  }
+}
+
+export function getIcon(entryType: string) {
+    return entryType === 'CREDIT' ? entryIcon : outIcon;
+}

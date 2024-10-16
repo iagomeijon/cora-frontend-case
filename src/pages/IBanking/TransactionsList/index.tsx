@@ -3,9 +3,7 @@ import { useEffect } from "react";
 import { useTransactionsContext } from "../../../core/contexts/transactionContext";
 import { ITransactionItem } from "../../../core/hooks/useTransactions/interfaces";
 import { useAuthContext } from "../../../core/contexts/authContext";
-import { formatDayDate, formatCurrency } from "./utils";
-import entryIcon from "../../../assets/svg/entry.svg";
-import reversalIcon from "../../../assets/svg/reversal.svg";
+import { formatDayDate, formatCurrency, formatDateTime, getIcon } from "./utils";
 
 function TransactionList() {
   //const {  authToken } = useAuthContext();
@@ -18,15 +16,16 @@ function TransactionList() {
   }, []);
 
   const renderTransactionRow = (item: ITransactionItem) => {
+    const valueClass = item.entry === 'CREDIT' ? 'entry' : '';
     return (
       <tr className="transaction-info">
         <td className="transaction-icon entry">
-          <img src={entryIcon} alt="entryIcon" title="entryIcon" />
+          <img src={getIcon(item.entry)} alt="entryIcon" title="entryIcon" />
         </td>
         <td className="transaction-name entry">{item.name}</td>
         <td className="transaction-description">{item.description}</td>
-        <td className="transaction-date">20 Set 2024 - 10:26</td>
-        <td className="transaction-value entry">
+        <td className="transaction-date">{formatDateTime(item.dateEvent)}</td>
+        <td id="transaction-value" className={valueClass}>
           {formatCurrency(item.amount, item.entry)}
         </td>
       </tr>
@@ -55,22 +54,6 @@ function TransactionList() {
             <table className="transaction-card">
               <tbody>
                 {_transactionDay.items.map(renderTransactionRow)}
-
-                <tr className="transaction-info">
-                  <td className="transaction-name entry">
-                    <img
-                      src={reversalIcon}
-                      alt="reversalIcon"
-                      title="reversalIcon"
-                    />
-                  </td>
-                  <td className="transaction-name">Supermercado Ana Rosa</td>
-                  <td className="transaction-description">Estornos</td>
-                  <td className="transaction-date">20 Set 2024 - 10:26</td>
-                  <td className="transaction-value reversal">
-                    - R$ 1.320.890,87
-                  </td>
-                </tr>
               </tbody>
             </table>
             <div className="divider" />
