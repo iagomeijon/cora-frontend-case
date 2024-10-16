@@ -1,9 +1,12 @@
 import { useState, ChangeEvent } from "react";
 import logoFullImage from "../../../assets/svg/logo-full.svg";
 import arrowRightImage from "../../../assets/svg/arrow-right.svg";
+import { useAuthContext } from '../../../core/contexts';
 import "./index.css";
 
 function Login() {
+
+  const {getToken} = useAuthContext();
   const [cpf, setCpf] = useState("");
   const [password, setPassword] = useState("");
 
@@ -16,10 +19,7 @@ function Login() {
   };
 
   const handleAuth = () => {
-    console.log({
-      cpf,
-      password,
-    });
+    getToken(cpf, password);
   };
 
   return (
@@ -31,6 +31,7 @@ function Login() {
         <input
           id="password"
           placeholder="Digite sua senha"
+          type="password"
           onChange={handleChangePassword}
         />
         <button onClick={handleAuth}>

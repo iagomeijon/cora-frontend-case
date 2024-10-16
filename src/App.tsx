@@ -1,13 +1,15 @@
 import AppRoutes from './routes/routes';
-// import Todo from "./Todo";
-// import { IBanking } from "./IBanking";
+
+import { AuthProvder } from './core/contexts/index';
 
 import "./App.css";
 
 function App() {
   return (
     <main id="page">
-      <AppRoutes />
+      <AuthProvder>
+          <AppRoutes />
+      </AuthProvder>
     </main>
   );
 }
