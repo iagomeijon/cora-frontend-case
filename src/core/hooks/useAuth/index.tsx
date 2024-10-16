@@ -1,38 +1,48 @@
-import { useState } from 'react';
-import axios from 'axios';
-import  IAuthResponse from './interfaces';
+import { useState } from "react";
+import axios from "axios";
+import IAuthResponse from "./interfaces";
 
 export default function useAuth() {
-
-  const [authToken, setAuthToken] = useState <string > ('');
+  const [authToken, setAuthToken] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const headers = {
-         'Content-Type': 'application/json'
-  }
+    "Content-Type": "application/json",
+  };
 
   function clean(): void {
     setIsLoading(false);
-    setAuthToken('');
+    setAuthToken("");
+    localStorage.removeItem("authToken");
   }
 
-  async function getToken(cpf: string, password: string): Promise<void> {
+  function logout(): void {
+    clean();
+  }
+
+  async function login(cpf: string, password: string): Promise<void> {
     clean();
     setIsLoading(true);
     try {
-        const response = await axios.post<IAuthResponse>('/auth', {
-            cpf: cpf,
-            password: password
-          }, {
-            headers
-          });
-          
+      const response = await axios.post<IAuthResponse>(
+        "/auth",
+        {
+          cpf: cpf,
+          password: password,
+        },
+        {
+          headers,
+        }
+      );
+
+      if (response.data.token) {
         setAuthToken(response.data.token);
+        localStorage.setItem("authToken", response.data.token);
+      }
     } finally {
-        setIsLoading(false);
+      setIsLoading(false);
     }
   }
-
 
   return {
     state: {
@@ -41,8 +51,9 @@ export default function useAuth() {
     },
 
     actions: {
-      getToken,
+      login,
       clean,
+      logout,
     },
   };
 }

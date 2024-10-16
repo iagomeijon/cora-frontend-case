@@ -21,8 +21,12 @@ const AuthProvder = (props: { children: ReactNode }) => {
   const { children } = props;
   const { actions, state } = useAuth();
 
-  function getToken(cpf: string, password: string) {
-    actions.getToken(cpf, password);
+  function login(cpf: string, password: string) {
+    actions.login(cpf, password);
+  }
+
+  function logout() {
+    actions.logout();
   }
 
   return (
@@ -30,7 +34,8 @@ const AuthProvder = (props: { children: ReactNode }) => {
       value={{
         isLoading: state.isLoading,
         authToken: state.authToken,
-        getToken,
+        login,
+        logout
       }}
     >
       {children}

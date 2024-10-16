@@ -12,9 +12,10 @@ export default function useTransactions() {
     setTransactions(null);
   }
 
-  async function getTransactions(token: string): Promise<void> {
+  async function getTransactions(): Promise<void> {
     clean();
     setIsLoading(true);
+    const token = localStorage.getItem("authToken");
     try {
       const response = await axios.get<ITransactionsResponse>("/list", {
         headers: {

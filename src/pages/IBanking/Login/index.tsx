@@ -6,7 +6,7 @@ import { useAuthContext } from "../../../core/contexts/authContext";
 import "./index.css";
 
 function Login() {
-  const { getToken, authToken } = useAuthContext();
+  const { login, logout,authToken } = useAuthContext();
   const [cpf, setCpf] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ function Login() {
   };
 
   const handleAuth = () => {
-    getToken(cpf, password);
+    login(cpf, password);
   };
 
   const goToTransactions = () => {
@@ -32,6 +32,10 @@ function Login() {
       goToTransactions();
     }
   }, [authToken])
+
+  useEffect(() => {
+      logout();
+  }, [])
 
   return (
     <main id="login">

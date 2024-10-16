@@ -1,5 +1,6 @@
 export interface AuthContextInterface {
   isLoading?: boolean;
   authToken?: string;
-  getToken: (cpf: string, password: string) => void;
+  login: (cpf: string, password: string) => void;
+  logout: () => void;
 }
