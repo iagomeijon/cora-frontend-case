@@ -27,7 +27,6 @@ export default function useAuth() {
             headers
           });
           
-        console.log(response.data);
         setAuthToken(response.data.token);
     } finally {
         setIsLoading(false);
