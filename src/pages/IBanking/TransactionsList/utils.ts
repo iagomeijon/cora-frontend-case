@@ -24,9 +24,9 @@ export function formatDayDate(dateString: string) {
     return formattedDate.replace(monthInEnglish, translatedMonth);
 }
 
-export function formatCurrency(value: number) {
+export function formatCurrency(value: number, entryType: string) {
 
-    const sign = value >= 0 ? '+' : '-';
+    const sign = entryType === 'CREDIT' ? '+' : '-';
 
     const absoluteValue = Math.abs(value);
 

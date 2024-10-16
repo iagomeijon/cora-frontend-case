@@ -23,11 +23,11 @@ function TransactionList() {
         <td className="transaction-icon entry">
           <img src={entryIcon} alt="entryIcon" title="entryIcon" />
         </td>
-        <td className="transaction-name entry">Supermercado Ana Rosa</td>
-        <td className="transaction-description">Recebimentos por Pix ou TED</td>
+        <td className="transaction-name entry">{item.name}</td>
+        <td className="transaction-description">{item.description}</td>
         <td className="transaction-date">20 Set 2024 - 10:26</td>
         <td className="transaction-value entry">
-          {formatCurrency(item.amount)}
+          {formatCurrency(item.amount, item.entry)}
         </td>
       </tr>
     );
