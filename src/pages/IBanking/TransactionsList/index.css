@@ -1,0 +1,112 @@
+#extract {
+  width: 60%;
+}
+
+.filters {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 48px;
+  gap: 10px;
+}
+
+.filter {
+  width: 82px;
+  padding: 5px 16px;
+  margin: 0px;
+  border: none;
+  border-radius: 32px;
+  background-color: #F0F4F8;
+  font-size: 16px;
+  font-family: "Avenir", sans-serif;
+  cursor: pointer;
+}
+
+.filter.active {
+  background-color: #3B3B3B;
+  color: white;
+}
+
+.transaction-date {
+  display: flex;
+  justify-content: space-between;
+  color: var(--color-gray);
+  font-size: 12px;
+  font-family: "Avenir", sans-serif;
+  margin: 10px 0px;
+}
+
+.transaction-date h3 {
+  font-size: 12px;
+}
+
+.divider {
+  margin: 0px;
+  margin-left: 24px;
+  min-height: 16px;
+  border-left: 1px solid var(--color-light-gray);
+}
+
+.transaction-card {
+  width: 100%;
+  table-layout: auto;
+
+  padding: 20px;
+  margin: 0px;
+  border-radius: 10px;
+
+  border: 1px solid var(--color-light-gray);
+
+}
+
+.transaction-info {
+  display: table-row;
+  width: 100%;
+}
+
+.transaction-info td {
+  padding: 10px;
+  font-size: 16px;
+  color: var(--color-gray);
+  font-weight: 400;
+  vertical-align: middle;
+  width: auto;
+}
+
+.transaction-name,
+.transaction-description,
+.transaction-date,
+.transaction-value {
+  width: 100%;
+  white-space: normal;
+  overflow: visible;
+}
+
+.transaction-date,
+.transaction-value {
+  text-align: right;
+}
+
+.transaction-name {
+  font-weight: 400;
+}
+
+.transaction-name.entry {
+  color: var(--color-entry);
+}
+
+.transaction-description {
+  font-size: 14px;
+  color: #777;
+}
+
+.transaction-value {
+  font-weight: 900;
+}
+
+.transaction-value.entry {
+  color: var(--color-entry);
+}
+
+.transaction-value.reversal {
+  text-decoration: line-through;
+}

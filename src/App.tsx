@@ -1,6 +1,6 @@
 import AppRoutes from './routes/routes';
 
-import { AuthProvder } from './core/contexts/index';
+import { AuthProvder } from './core/contexts/authContext/index';
 
 import "./App.css";
 

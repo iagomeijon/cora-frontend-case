@@ -1,7 +1,7 @@
 import { useState, ChangeEvent } from "react";
 import logoFullImage from "../../../assets/svg/logo-full.svg";
 import arrowRightImage from "../../../assets/svg/arrow-right.svg";
-import { useAuthContext } from '../../../core/contexts';
+import { useAuthContext } from '../../../core/contexts/authContext';
 import "./index.css";
 
 function Login() {
