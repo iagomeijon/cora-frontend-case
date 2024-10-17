@@ -1,10 +1,10 @@
-import "./index.css";
 import { useEffect, useState } from "react";
 import { useTransactionsContext } from "../../../core/contexts/transactionContext";
 import { ITransactionItem } from "../../../core/hooks/useTransactions/interfaces";
 import useStrings from "../../../core/hooks/useStrings";
 import { TransactionItem } from "./fragments/TransactionItem";
 import { formatDayDate } from "./utils";
+import "./index.scss";
 
 function TransactionList() {
   const { strings } = useStrings();

@@ -1,6 +1,6 @@
-import "../index.css";
 import { ITransactionItem } from "../../../../core/hooks/useTransactions/interfaces";
 import { formatCurrency, formatDateTime, getIcon } from "../utils";
+import "../index.scss";
 
 interface ITransactionItemProps {
   item: ITransactionItem;

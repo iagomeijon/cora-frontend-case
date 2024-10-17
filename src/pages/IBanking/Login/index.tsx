@@ -4,7 +4,7 @@ import logoFullImage from "../../../assets/svg/logo-full.svg";
 import arrowRightImage from "../../../assets/svg/arrow-right.svg";
 import { useAuthContext } from "../../../core/contexts/authContext";
 import useStrings  from "../../../core/hooks/useStrings";
-import "./index.css";
+import "./index.scss";
 
 function Login() {
   const { strings } = useStrings();
