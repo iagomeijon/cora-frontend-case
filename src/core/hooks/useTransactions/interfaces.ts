@@ -6,6 +6,7 @@ export interface ITransactionsResponse {
 export interface ITransactionDay {
   date: string;
   items: ITransactionItem[];
+  balance: string;
 }
 
 export interface ITransactionItem {

@@ -13,7 +13,8 @@
           "status": "COMPLETED"
         }
       ],
-      "date": "2024-01-11"
+      "date": "2024-01-11",
+      "balance": "3.780,08"
     },
     {
       "items": [
@@ -28,7 +29,8 @@
           "status": "COMPLETED"
         }
       ],
-      "date": "2024-02-01"
+      "date": "2024-02-01",
+      "balance": "5.080,08"
     },
     {
       "items": [
@@ -43,7 +45,8 @@
           "status": "COMPLETED"
         }
       ],
-      "date": "2023-10-15"
+      "date": "2023-10-15",
+      "balance": "1.080,08"
     },
     {
       "items": [
@@ -58,7 +61,8 @@
           "status": "COMPLETED"
         }
       ],
-      "date": "2023-12-11"
+      "date": "2023-12-11",
+      "balance": "10.060,08"
     }
    
   ],

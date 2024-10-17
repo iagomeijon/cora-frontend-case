@@ -2,10 +2,14 @@ import "./index.css";
 import { useEffect, useState } from "react";
 import { useTransactionsContext } from "../../../core/contexts/transactionContext";
 import { ITransactionItem } from "../../../core/hooks/useTransactions/interfaces";
+import useStrings from "../../../core/hooks/useStrings";
 import { TransactionItem } from "./fragments/TransactionItem";
 import { formatDayDate } from "./utils";
 
 function TransactionList() {
+  const { strings } = useStrings();
+  const { Transactions: TransactionsStrings } = strings.components;
+
   const { getTransactions, transactions } = useTransactionsContext();
 
   const [filter, setFilter] = useState<null | "DEBIT" | "CREDIT">(null);
@@ -17,7 +21,7 @@ function TransactionList() {
   };
 
   const renderTransactionRow = (item: ITransactionItem) => (
-    <TransactionItem item={item} />
+    <TransactionItem key={item.id} item={item} />
   );
 
   const getFilteredTransactions = () => {
@@ -57,13 +61,13 @@ function TransactionList() {
           className={`filter ${filter === "DEBIT" ? "active" : ""}`}
           onClick={() => toggleFilter("DEBIT")}
         >
-          Débito
+          {TransactionsStrings.debit}
         </button>
         <button
           className={`filter ${filter === "CREDIT" ? "active" : ""}`}
           onClick={() => toggleFilter("CREDIT")}
         >
-          Crédito
+          {TransactionsStrings.credit}
         </button>
       </section>
 
@@ -73,7 +77,8 @@ function TransactionList() {
             <div className="transaction-date">
               <h3>{formatDayDate(_transactionDay.date)}</h3>
               <p>
-                saldo do dia <strong>R$ 3.780,08</strong>
+                {TransactionsStrings.balanceTitle}{" "}
+                <strong>R$ {_transactionDay.balance}</strong>
               </p>
             </div>
 

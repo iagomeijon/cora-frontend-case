@@ -1,11 +1,14 @@
-import { useState, ChangeEvent, useEffect } from "react";
+import { useState, ChangeEvent, useEffect, useCallback } from "react";
 import { useNavigate } from 'react-router-dom';
 import logoFullImage from "../../../assets/svg/logo-full.svg";
 import arrowRightImage from "../../../assets/svg/arrow-right.svg";
 import { useAuthContext } from "../../../core/contexts/authContext";
+import useStrings  from "../../../core/hooks/useStrings";
 import "./index.css";
 
 function Login() {
+  const { strings } = useStrings();
+  const { Login: LoginStrings } = strings.components;
   const { login, logout,authToken } = useAuthContext();
   const [cpf, setCpf] = useState("");
   const [password, setPassword] = useState("");
@@ -23,15 +26,15 @@ function Login() {
     login(cpf, password);
   };
 
-  const goToTransactions = () => {
+  const goToTransactions = useCallback(() => {
     navigate('/transactions');
-  }
+  }, [navigate]);
 
   useEffect(() => {
     if(authToken !== '') {
       goToTransactions();
     }
-  }, [authToken])
+  }, [authToken, goToTransactions])
 
   useEffect(() => {
       logout();
@@ -41,20 +44,20 @@ function Login() {
     <main id="login">
       <div className="wrapper">
         <img src={logoFullImage} alt="Cora" title="Cora" />
-        <h1>Fazer Login</h1>
+        <h1>{LoginStrings.title}</h1>
         <input
           id="cpf"
-          placeholder="Insira seu e-mail ou CPF"
+          placeholder={LoginStrings.cpfInput}
           onChange={handleChangeCPF}
         />
         <input
           id="password"
-          placeholder="Digite sua senha"
+          placeholder={LoginStrings.passwordInput}
           type="password"
           onChange={handleChangePassword}
         />
         <button onClick={handleAuth}>
-          Continuar
+          {LoginStrings.button}
           <img src={arrowRightImage} />
         </button>
       </div>
