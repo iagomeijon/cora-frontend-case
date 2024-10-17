@@ -1,43 +1,73 @@
 import "./index.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTransactionsContext } from "../../../core/contexts/transactionContext";
 import { ITransactionItem } from "../../../core/hooks/useTransactions/interfaces";
-import { formatDayDate, formatCurrency, formatDateTime, getIcon } from "./utils";
+import { TransactionItem } from "./fragments/TransactionItem";
+import { formatDayDate } from "./utils";
 
 function TransactionList() {
-  
   const { getTransactions, transactions } = useTransactionsContext();
+
+  const [filter, setFilter] = useState<null | "DEBIT" | "CREDIT">(null);
+
+  const toggleFilter = (entryType: "DEBIT" | "CREDIT") => {
+    setFilter((currentFilter) =>
+      currentFilter === entryType ? null : entryType
+    );
+  };
+
+  const renderTransactionRow = (item: ITransactionItem) => (
+    <TransactionItem item={item} />
+  );
+
+  const getFilteredTransactions = () => {
+    if (!transactions) return undefined;
+
+    if (!filter) {
+      return transactions;
+    }
+
+    const filteredResults = transactions.results
+      .map((transactionDay) => ({
+        ...transactionDay,
+        items: transactionDay.items.filter((item) => item.entry === filter),
+      }))
+      .filter((day) => day.items.length > 0);
+
+    return {
+      ...transactions,
+      results: filteredResults,
+      itemsTotal: filteredResults.reduce(
+        (total, day) => total + day.items.length,
+        0
+      ),
+    };
+  };
+
+  const filteredTransactions = getFilteredTransactions();
 
   useEffect(() => {
     getTransactions();
   }, []);
 
-  const renderTransactionRow = (item: ITransactionItem) => {
-    const valueClass = item.entry === 'CREDIT' ? 'entry' : '';
-    return (
-      <tr key={item.id} className="transaction-info">
-        <td className="transaction-icon entry">
-          <img src={getIcon(item.entry)} alt="entryIcon" title="entryIcon" />
-        </td>
-        <td className="transaction-name entry">{item.name}</td>
-        <td className="transaction-description">{item.description}</td>
-        <td className="transaction-date">{formatDateTime(item.dateEvent)}</td>
-        <td id="transaction-value" className={valueClass}>
-          {formatCurrency(item.amount, item.entry)}
-        </td>
-      </tr>
-    );
-  };
-
   return (
     <main id="extract">
-      {/* Debit/Credit Filters */}
       <section className="filters">
-        <button className="filter active">Débito</button>
-        <button className="filter">Crédito</button>
+        <button
+          className={`filter ${filter === "DEBIT" ? "active" : ""}`}
+          onClick={() => toggleFilter("DEBIT")}
+        >
+          Débito
+        </button>
+        <button
+          className={`filter ${filter === "CREDIT" ? "active" : ""}`}
+          onClick={() => toggleFilter("CREDIT")}
+        >
+          Crédito
+        </button>
       </section>
 
-      {transactions?.results.map((_transactionDay) => {
+      {filteredTransactions?.results.map((_transactionDay) => {
         return (
           <section key={_transactionDay.date}>
             <div className="transaction-date">
@@ -49,9 +79,7 @@ function TransactionList() {
 
             <div className="divider" />
             <table className="transaction-card">
-              <tbody>
-                {_transactionDay.items.map(renderTransactionRow)}
-              </tbody>
+              <tbody>{_transactionDay.items.map(renderTransactionRow)}</tbody>
             </table>
             <div className="divider" />
           </section>
