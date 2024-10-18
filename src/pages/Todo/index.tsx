@@ -7,7 +7,6 @@ import { ITodoTypes } from "./types";
 import "./index.css";
 
 function Todo() {
-
   const originalItems = TODO_LIST;
 
   const [items, setItems] = useState(TODO_LIST);
@@ -18,50 +17,43 @@ function Todo() {
   };
 
   const handleSearch = (event: FormEvent) => {
-
     event.preventDefault();
 
-
-    //RESET 
     if (searchInputValue.trim() === "") {
       setItems(originalItems);
     } else {
-      // FILTER
       const filteredItems = originalItems.filter((item) =>
         item.title.toLowerCase().includes(searchInputValue.toLowerCase())
       );
       setItems(filteredItems);
     }
-
   };
 
   const handleDeleteTask = (id: string) => {
-
-    setItems(items.filter((_item)  => _item.id !== id));
-
+    setItems(items.filter((_item) => _item.id !== id));
   };
 
   const handleChangeTaskStatus = (id: string, status: ITodoTypes) => {
-    const reversedStatus = status === "pending" ?  "done" : "pending";
+    const reversedStatus = status === "pending" ? "done" : "pending";
 
-    setItems(items.map((_item) => {
-        if(_item.id === id) {
+    setItems(
+      items.map((_item) => {
+        if (_item.id === id) {
           return {
             ..._item,
-            status: reversedStatus
+            status: reversedStatus,
           };
         } else {
           return _item;
         }
-    }));
-    
+      })
+    );
   };
 
   useEffect(() => {
-    if (searchInputValue === '') {
+    if (searchInputValue === "") {
       setItems(originalItems);
     }
-     
   }, [originalItems, searchInputValue]);
 
   return (
@@ -116,7 +108,11 @@ function Todo() {
                     {item.links && item.links.length > 0 && (
                       <div className="todo__links">
                         {item.links.map((link) => (
-                          <a key={link.name} target="_blank" href={link?.link || link?.url }>
+                          <a
+                            key={link.name}
+                            target="_blank"
+                            href={link?.link || link?.url}
+                          >
                             {link.name}
                           </a>
                         ))}
@@ -128,7 +124,10 @@ function Todo() {
                       </button>
                       <button
                         onClick={() =>
-                          handleChangeTaskStatus(item.id, item.status as ITodoTypes)
+                          handleChangeTaskStatus(
+                            item.id,
+                            item.status as ITodoTypes
+                          )
                         }
                       >
                         change to{" "}
